@@ -8,12 +8,15 @@ export default function Home() {
 
   useEffect(() => {
     async function fet() {
-      const response = await fetch('http://127.0.0.1:8000/api/v1/getAllUser', {
-        method: 'GET',
-        headers: {
-          authentication: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        'https://user-authentication-8w3s.onrender.com/api/v1/getAllUser',
+        {
+          method: 'GET',
+          headers: {
+            authentication: `Bearer ${token}`,
+          },
+        }
+      );
       const currentData = await response.json();
       const actUser = currentData.data;
       setUserDetails(actUser);

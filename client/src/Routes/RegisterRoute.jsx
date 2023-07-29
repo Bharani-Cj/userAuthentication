@@ -13,19 +13,22 @@ export default function Register() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const responce = await fetch('http://127.0.0.1:8000/api/v1/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userName,
-        email,
-        DOB,
-        password,
-        passwordConfirm,
-      }),
-    });
+    const responce = await fetch(
+      'https://user-authentication-8w3s.onrender.com/api/v1/signup',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userName,
+          email,
+          DOB,
+          password,
+          passwordConfirm,
+        }),
+      }
+    );
     const data = await responce.json();
     console.log(data);
     if (data.token) {

@@ -7,16 +7,19 @@ export default function LogIn() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const responce = await fetch('http://127.0.0.1:8000/api/v1/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userName,
-        password,
-      }),
-    });
+    const responce = await fetch(
+      'https://user-authentication-8w3s.onrender.com/api/v1/login',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userName,
+          password,
+        }),
+      }
+    );
     const responceData = await responce.json();
 
     if (responceData.token) {
@@ -67,7 +70,10 @@ export default function LogIn() {
 
         <div className="register-link">
           <p>
-            Don't have an account? <a href="/register">Register</a>
+            Don't have an account?
+            <a href="https://userss-authentication.netlify.app/register">
+              Register
+            </a>
           </p>
         </div>
       </form>
