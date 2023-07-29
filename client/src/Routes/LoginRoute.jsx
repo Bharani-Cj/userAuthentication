@@ -71,9 +71,7 @@ export default function LogIn() {
         <div className="register-link">
           <p>
             Don't have an account?
-            <a href="https://userss-authentication.netlify.app/register">
-              Register
-            </a>
+            <a href="/register">Register</a>
           </p>
         </div>
       </form>
