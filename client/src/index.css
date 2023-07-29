@@ -1,0 +1,155 @@
+* {
+   padding: 0;
+   margin: 0;
+   box-sizing: border-box;
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.wrapper {
+   width: 100vw;
+   height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background: url('./../public/BackDrop-2.jpg');
+   background-size: cover;
+   background-repeat: no-repeat;
+}
+
+@keyframes formBlock {
+   from {
+      transform: translateX(-4px);
+   }
+
+   to {
+      transform: translateX(0px);
+   }
+}
+
+.formContainer {
+   position: relative;
+   width: 30rem;
+   height: fit-content;
+   background: #1256;
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+   border-radius: 15px;
+   animation: formBlock 0.2s ease-in;
+}
+
+.formContainer h1 {
+   font-weight: bolder;
+   letter-spacing: 1px;
+   font-size: 2.6rem;
+   color: #e4dfdf;
+   margin: 20px;
+   margin-bottom: 40px;
+}
+
+.formContainer .input-box {
+   width: 90%;
+}
+
+.formContainer .input-box input {
+   width: 100%;
+   height: 40px;
+   font-weight: bold;
+   font-size: 20px;
+   color: #352a2a;
+   outline: solid;
+   outline-color: rgba(160, 87, 42, 0.481);
+   border-radius: 15px;
+   padding: 15px;
+   border: none;
+   margin-bottom: 15px;
+   background: #e4dfdf8a;
+}
+
+::placeholder {
+   color: #2e2d2dd3;
+   font-size: 18px;
+   font-weight: bolder;
+}
+
+.formContainer .remember-forgot {
+   width: 90%;
+   display: flex;
+   justify-content: space-between;
+}
+
+.formContainer .remember-forgot label {
+   color: #fff;
+   font-size: 16px;
+}
+
+.formContainer .remember-forgot a {
+   text-decoration: none;
+   color: #fff;
+}
+
+.formContainer .btn {
+   letter-spacing: 2px;
+   font-weight: bolder;
+   color: #0b0404d3;
+   background: #e4dfdf8a;
+   font-size: 20px;
+   border: none;
+   margin: 15px;
+   border-radius: 15px;
+   height: 35px;
+   width: 50%;
+   cursor: pointer;
+}
+
+.formContainer h2.btn {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   transition: all 0.3s;
+}
+
+.formContainer h2.btn:hover {
+   transform: translateY(-4px);
+}
+
+.formContainer .register-link p {
+   margin: 15px;
+}
+
+.formContainer .register-link p {
+   color: #ffffffb6;
+}
+
+.formContainer .register-link p a {
+   text-decoration: none;
+   color: #ffffff;
+   transition: all 0.2s;
+}
+
+.formContainer .register-link p a:hover {
+   font-size: 1.3rem;
+   color: #bd687e;
+   color: red;
+}
+
+.painted {
+   color: red;
+   font-size: 20px;
+   margin-bottom: 5px;
+   text-align: center;
+}
+
+.wrapper .formContainer .navBack {
+   font-size: 3rem;
+   color: #a79caf;
+   position: absolute;
+   left: 25px;
+   top: 25px;
+   cursor: pointer;
+   transition: all 0.3s;
+}
+
+.wrapper .formContainer .navBack:hover {
+   transform: translateX(-5px);
+}
