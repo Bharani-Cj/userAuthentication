@@ -1,12 +1,24 @@
 import { useState } from 'react';
 
 export default function LogIn() {
+  return (
+    <div className="wrapper">
+      <Form></Form>
+    </div>
+  );
+}
+
+function Form() {
+  const [data, setData] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-  const [data, setData] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    setLoading(true);
     const responce = await fetch(
       'https://user-authentication-8w3s.onrender.com/api/v1/login',
       {
@@ -27,54 +39,64 @@ export default function LogIn() {
       window.location.href = '/home';
     } else {
       setData(responceData);
+      setLoading(false);
     }
   }
 
-  return (
-    <div className="wrapper">
-      <form className="formContainer" onSubmit={handleSubmit}>
-        <h1>Login</h1>
-        <div className="input-box">
-          <input
-            type="userName"
-            placeholder="Username"
-            value={userName}
-            onChange={(e) => {
-              setData('');
-              setUserName(e.target.value);
-            }}
-          />
-        </div>
-        <div className="input-box">
-          <input
-            type="password"
-            placeholder="Password"
-            required
-            value={password}
-            onChange={(e) => {
-              setData('');
-              setPassword(e.target.value);
-            }}
-          />
-        </div>
-        {data.message ? <p className="painted">{data.message}</p> : null}
-        <div className="remember-forgot">
-          <label>
-            <input type="checkbox" /> Remember me
-          </label>
-          <a href="22">Forgot password?</a>
-        </div>
-        <button type="submit" className="btn">
-          login
-        </button>
+  function handleClickShowPassword() {
+    setShowPassword(!showPassword);
+  }
 
-        <div className="register-link">
-          <p>
-            Don't have an account?
-            <a href="/register">Register</a>
-          </p>
-        </div>
-      </form>
-    </div>
+  return (
+    <form className="formContainer" onSubmit={handleSubmit}>
+      <h1>Login</h1>
+
+      <div className="input-box">
+        <input
+          type="userName"
+          placeholder="Username"
+          value={userName}
+          onChange={(e) => {
+            setData('');
+            setUserName(e.target.value);
+          }}
+        />
+      </div>
+      <div className="input-box">
+        <label onClick={handleClickShowPassword}>
+          <i class="fa-solid fa-eye"></i>
+        </label>
+        <input
+          type={showPassword ? 'text' : 'password'}
+          placeholder="Password"
+          required
+          value={password}
+          onChange={(e) => {
+            setData('');
+            setPassword(e.target.value);
+          }}
+        />
+      </div>
+
+      {data.message ? <p className="painted">{data.message}</p> : null}
+
+      <div className="remember-forgot">
+        <label>
+          <input type="checkbox" checked /> Remember me
+        </label>
+        <a href="22">Forgot password?</a>
+      </div>
+      <button type="submit" className="btn">
+        {loading ? (
+          <img src="/spinner/LoadingSpinner.svg" alt="spinner" />
+        ) : (
+          'login'
+        )}
+      </button>
+
+      <p className="register-link">
+        Don't have an account? |<a href="/register"> Register</a>
+      </p>
+    </form>
   );
 }

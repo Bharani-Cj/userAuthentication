@@ -9,9 +9,11 @@ export default function Register() {
   const [passwordConfirm, setpasswordConfirm] = useState('');
   const [steps, setSteps] = useState(1);
   const [errors, setErrors] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event) {
     event.preventDefault();
+    setLoading(true);
 
     const responce = await fetch(
       'https://user-authentication-8w3s.onrender.com/api/v1/signup',
@@ -35,6 +37,7 @@ export default function Register() {
       window.location.href = '/';
     } else {
       setErrors(data);
+      setLoading(false);
     }
   }
 
@@ -71,7 +74,12 @@ export default function Register() {
           />
         )}
         {errors.message ? <p className="painted">{errors.message}</p> : null}
-        <Button steps={steps} setSteps={setSteps} setErrors={setErrors} />
+        <Button
+          steps={steps}
+          setSteps={setSteps}
+          setErrors={setErrors}
+          loading={loading}
+        />
         <LoginButton />
       </form>
     </div>
@@ -99,7 +107,7 @@ function DateOfBirth({ DOB, setDOB, setErrors }) {
   return (
     <div className="input-box">
       <input
-        type="date"
+        type="Date"
         placeholder="Date of birth"
         required
         value={DOB}
@@ -166,17 +174,19 @@ function UserName({ userName, setUserName, setErrors }) {
   );
 }
 
-function Button({ steps, setSteps }) {
+function Button({ steps, setSteps, loading }) {
   function handleNextButton() {
     setSteps(steps + 1);
-    console.log(steps);
   }
-  console.log(steps);
   return (
     <>
       {steps >= 3 ? (
         <button type="submit" className="btn">
-          SignIn
+          {loading ? (
+            <img src="/spinner/LoadingSpinner.svg" alt="spinner" />
+          ) : (
+            'SignIn'
+          )}
         </button>
       ) : (
         <h2 className="btn" onClick={handleNextButton}>
