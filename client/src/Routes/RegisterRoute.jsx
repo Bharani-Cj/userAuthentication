@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { BsArrowLeftCircleFill } from 'react-icons/bs';
 
 export default function Register() {
   const [userName, setUserName] = useState('');
@@ -7,30 +6,31 @@ export default function Register() {
   const [DOB, setDOB] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setpasswordConfirm] = useState('');
-  const [steps, setSteps] = useState(1);
   const [errors, setErrors] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  function handleClickShowPassword() {
+    setShowPassword(!showPassword);
+  }
 
   async function handleSubmit(event) {
     event.preventDefault();
     setLoading(true);
 
-    const responce = await fetch(
-      'https://user-authentication-8w3s.onrender.com/api/v1/signup',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userName,
-          email,
-          DOB,
-          password,
-          passwordConfirm,
-        }),
-      }
-    );
+    const responce = await fetch('https://user-authentication-8w3s.onrender.com/api/v1/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userName,
+        email,
+        DOB,
+        password,
+        passwordConfirm,
+      }),
+    });
     const data = await responce.json();
     console.log(data);
     if (data.token) {
@@ -41,45 +41,28 @@ export default function Register() {
     }
   }
 
-  function handleBack() {
-    setSteps(steps > 1 ? steps - 1 : steps);
-  }
   return (
     <div className="wrapper">
       <form className="formContainer" onSubmit={handleSubmit}>
-        {steps <= 1 ? null : (
-          <BsArrowLeftCircleFill className="navBack" onClick={handleBack} />
-        )}
         <h1>Welcome</h1>
-        {steps === 1 && (
-          <>
-            <UserName
-              userName={userName}
-              setUserName={setUserName}
-              setErrors={setErrors}
-            />
-            <Email email={email} setEmail={setEmail} setErrors={setErrors} />
-          </>
-        )}
-        {steps === 2 && (
-          <DateOfBirth DOB={DOB} setDOB={setDOB} setErrors={setErrors} />
-        )}
-        {steps === 3 && (
-          <Passwords
-            password={password}
-            setPassword={setPassword}
-            passwordConfirm={passwordConfirm}
-            setpasswordConfirm={setpasswordConfirm}
-            setErrors={setErrors}
-          />
-        )}
-        {errors.message ? <p className="painted">{errors.message}</p> : null}
-        <Button
-          steps={steps}
-          setSteps={setSteps}
+
+        <UserName userName={userName} setUserName={setUserName} setErrors={setErrors} />
+        <Email email={email} setEmail={setEmail} setErrors={setErrors} />
+
+        <DateOfBirth DOB={DOB} setDOB={setDOB} setErrors={setErrors} />
+
+        <Passwords
+          password={password}
+          setPassword={setPassword}
+          passwordConfirm={passwordConfirm}
+          setpasswordConfirm={setpasswordConfirm}
           setErrors={setErrors}
-          loading={loading}
+          handleClickShowPassword={handleClickShowPassword}
+          showPassword={showPassword}
         />
+
+        {errors.message ? <p className="painted">{errors.message}</p> : null}
+        <Button setErrors={setErrors} loading={loading} />
         <LoginButton />
       </form>
     </div>
@@ -99,6 +82,7 @@ function Email({ email, setEmail, setErrors }) {
           setEmail(e.target.value);
         }}
       />
+      <i class="fa-solid fa-envelope"></i>
     </div>
   );
 }
@@ -126,12 +110,21 @@ function Passwords({
   passwordConfirm,
   setpasswordConfirm,
   setErrors,
+  handleClickShowPassword,
+  showPassword,
 }) {
   return (
     <>
       <div className="input-box">
+        {password ? (
+          <label onClick={handleClickShowPassword}>
+            <i class="fa-solid fa-eye"></i>
+          </label>
+        ) : (
+          <i class="fa-solid fa-lock"></i>
+        )}
         <input
-          type="password"
+          type={showPassword ? 'type' : 'password'}
           placeholder="Password"
           required
           value={password}
@@ -142,8 +135,9 @@ function Passwords({
         />
       </div>
       <div className="input-box">
+        <i class="fa-solid fa-lock"></i>
         <input
-          type="password"
+          type={showPassword ? 'type' : 'password'}
           placeholder="Confirm Password"
           required
           value={passwordConfirm}
@@ -170,36 +164,22 @@ function UserName({ userName, setUserName, setErrors }) {
           setUserName(e.target.value);
         }}
       />
+      <i class="fa-solid fa-user"></i>
     </div>
   );
 }
 
-function Button({ steps, setSteps, loading }) {
-  function handleNextButton() {
-    setSteps(steps + 1);
-  }
+function Button({ loading }) {
   return (
-    <>
-      {steps >= 3 ? (
-        <button type="submit" className="btn">
-          {loading ? (
-            <img src="/spinner/LoadingSpinner.svg" alt="spinner" />
-          ) : (
-            'SignIn'
-          )}
-        </button>
-      ) : (
-        <h2 className="btn" onClick={handleNextButton}>
-          Next
-        </h2>
-      )}
-    </>
+    <button type="submit" className="btn">
+      {loading ? <img src="/spinner/LoadingSpinner.svg" alt="spinner" /> : 'Sign Up'}
+    </button>
   );
 }
 
 function LoginButton() {
   return (
-    <div className="register-link">
+    <div className="register-login">
       <p>
         Already have an account? | <a href="/">LogIn</a>
       </p>

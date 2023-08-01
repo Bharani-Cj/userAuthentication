@@ -61,11 +61,16 @@ function Form() {
             setUserName(e.target.value);
           }}
         />
+        <i class="fa-solid fa-user"></i>
       </div>
       <div className="input-box">
-        <label onClick={handleClickShowPassword}>
-          <i class="fa-solid fa-eye"></i>
-        </label>
+        {password ? (
+          <label onClick={handleClickShowPassword}>
+            <i class="fa-solid fa-eye"></i>
+          </label>
+        ) : (
+          <i class="fa-solid fa-lock"></i>
+        )}
         <input
           type={showPassword ? 'text' : 'password'}
           placeholder="Password"
@@ -82,7 +87,7 @@ function Form() {
 
       <div className="remember-forgot">
         <label>
-          <input type="checkbox" checked /> Remember me
+          <input type="checkbox" /> Remember me
         </label>
         <a href="22">Forgot password?</a>
       </div>
@@ -94,7 +99,7 @@ function Form() {
         )}
       </button>
 
-      <p className="register-link">
+      <p className="register-login">
         Don't have an account? |<a href="/register"> Register</a>
       </p>
     </form>

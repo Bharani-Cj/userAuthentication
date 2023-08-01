@@ -8,15 +8,12 @@ export default function Home() {
 
   useEffect(() => {
     async function fet() {
-      const response = await fetch(
-        'https://user-authentication-8w3s.onrender.com/api/v1/getAllUser',
-        {
-          method: 'GET',
-          headers: {
-            authentication: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch('https://user-authentication-8w3s.onrender.com/api/v1/getAllUser', {
+        method: 'GET',
+        headers: {
+          authentication: `Bearer ${token}`,
+        },
+      });
       const currentData = await response.json();
       const actUser = currentData.data;
       setUserDetails(actUser);
@@ -25,9 +22,9 @@ export default function Home() {
   }, [token]);
 
   return (
-    <div className="table-container">
-      <h1 style={{ color: 'green', textAlign: 'center' }}>USER DETAILS</h1>
-      <table id="customers">
+    <div id="table_container">
+      <h3>This is the landing page of the [users in the database]</h3>
+      <table className="customers">
         <thead>
           <tr>
             <th>Name</th>
